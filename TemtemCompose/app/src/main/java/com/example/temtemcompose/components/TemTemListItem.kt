@@ -25,7 +25,7 @@ import com.example.temtemcompose.R
 import com.example.temtemcompose.models.TemTem
 
 @Composable
-fun TemTemHeader(
+fun TemTemListItem(
     temTem: TemTem
 ) {
 
@@ -54,7 +54,7 @@ fun TemTemHeader(
 
 @Preview
 @Composable
-fun PreviewTemTemHeader() {
+fun PreviewTemTemListItem() {
     Row(modifier = Modifier.padding(16.dp)) {
         Image(
             painter = painterResource(id = R.drawable.ic_launcher_background),
