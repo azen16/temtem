@@ -1,6 +1,7 @@
 package com.example.temtemcompose
 
 import androidx.compose.runtime.mutableStateListOf
+import androidx.compose.runtime.mutableStateOf
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.example.temtemcompose.models.TemTem
@@ -8,9 +9,10 @@ import com.example.temtemcompose.models.TemType
 import kotlinx.coroutines.launch
 
 class TemTemViewModel: ViewModel() {
-    val temList = mutableStateListOf<TemTem>()
+    private val temList = mutableStateListOf<TemTem>()
     val typeList = mutableStateListOf<TemType>()
     val filteredTemList = mutableStateListOf<TemTem>()
+    val currentTem = mutableStateOf<TemTem?>(null)
 
     init {
         getTemList()
@@ -25,6 +27,16 @@ class TemTemViewModel: ViewModel() {
             filteredTemList.addAll(
                 temList.filter { it.types?.contains(type) == true }
             )
+        }
+    }
+
+    fun selectTemTem(id: Int) {
+        viewModelScope.launch {
+            val call = TemTemServiceHelper.getInstance().create(TemTemService::class.java)
+                .getTemTem(id)
+            if (call.isSuccessful) {
+                currentTem.value = call.body()
+            }
         }
     }
 

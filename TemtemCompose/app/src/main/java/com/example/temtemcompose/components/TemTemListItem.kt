@@ -2,6 +2,7 @@ package com.example.temtemcompose.components
 
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.border
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.padding
@@ -26,10 +27,12 @@ import com.example.temtemcompose.models.TemTem
 
 @Composable
 fun TemTemListItem(
-    temTem: TemTem
+    temTem: TemTem,
+    clickAction: () -> Unit
 ) {
 
-    Column(modifier = Modifier.padding(16.dp)) {
+    Column(modifier = Modifier.padding(16.dp).clickable{clickAction()}) {
+
         SubcomposeAsyncImage(
             model = temTem.portrait, contentDescription = temTem.name,
             contentScale = ContentScale.Crop,

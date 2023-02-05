@@ -8,6 +8,7 @@ import retrofit2.Response
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
 import retrofit2.http.GET
+import retrofit2.http.Path
 
 interface TemTemService {
 
@@ -16,6 +17,9 @@ interface TemTemService {
 
     @GET("types")
     suspend fun getTypes(): Response<ArrayList<TemType>>
+
+    @GET("temtems/{id}")
+    suspend fun getTemTem(@Path("id") id: Int): Response<TemTem>
 }
 
 object TemTemServiceHelper {

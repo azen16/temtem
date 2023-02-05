@@ -33,8 +33,15 @@ fun TemTemHeader(viewModel: TemTemViewModel = TemTemViewModel()) {
         DropdownMenu(expanded = showMenu, onDismissRequest = {
             showMenu = false
         }) {
+            DropdownMenuItem(text = { Text("Reset")}, onClick = {
+                viewModel.filter("")
+                showMenu = false
+            })
             viewModel.typeList.forEach {
-                DropdownMenuItem(text = { Text(it.name ?: "") }, onClick = { viewModel.filter(it.name ?: "") })
+                DropdownMenuItem(text = { Text(it.name ?: "") }, onClick = {
+                    viewModel.filter(it.name ?: "")
+                    showMenu = false
+                })
             }
         }
     }
