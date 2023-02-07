@@ -16,7 +16,7 @@ data class TemTem (
     @SerializedName("wikiUrl")
     val wiki: String?,
     @SerializedName("stats")
-    val stats: StatTable?,
+    val stats: Map<String, String>?,
     @SerializedName("traits")
     val traits: ArrayList<String>?,
     @SerializedName("techniques")
