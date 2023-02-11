@@ -1,7 +1,6 @@
 package com.example.temtemcompose
 
 import android.os.Bundle
-import android.widget.Toast
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.compose.foundation.layout.Column
@@ -26,7 +25,7 @@ import com.example.temtemcompose.components.PreviewTemTemListItem
 
 import com.example.temtemcompose.components.TemTemHeader
 import com.example.temtemcompose.components.TemTemListItem
-import com.example.temtemcompose.components.details.TemTemComposable
+import com.example.temtemcompose.components.details.TemTemDetailedView
 import com.example.temtemcompose.ui.theme.TemtemComposeTheme
 
 class MainActivity : ComponentActivity() {
@@ -56,7 +55,7 @@ class MainActivity : ComponentActivity() {
             }
             composable("temtem/{id}",
              arguments = listOf(navArgument("id") {type = NavType.IntType})) {
-                TemTemComposable(viewModel = viewModel, it.arguments?.getInt("id"))
+                TemTemDetailedView(viewModel = viewModel, it.arguments?.getInt("id"))
             }
         }
     }

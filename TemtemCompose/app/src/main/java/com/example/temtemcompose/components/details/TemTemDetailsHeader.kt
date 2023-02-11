@@ -1,10 +1,10 @@
 package com.example.temtemcompose.components.details
 
 import androidx.compose.foundation.border
-import androidx.compose.foundation.layout.*
-import androidx.compose.foundation.lazy.grid.GridCells
-import androidx.compose.foundation.lazy.grid.LazyVerticalGrid
-import androidx.compose.foundation.lazy.grid.items
+import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.Row
+import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.material3.CircularProgressIndicator
 import androidx.compose.material3.Divider
@@ -15,28 +15,20 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
-import androidx.compose.ui.graphics.RectangleShape
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.text.font.FontStyle
 import androidx.compose.ui.text.font.FontWeight
-import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import coil.compose.AsyncImagePainter
 import coil.compose.SubcomposeAsyncImage
 import coil.compose.SubcomposeAsyncImageContent
-import com.example.temtemcompose.TemTemViewModel
+import com.example.temtemcompose.models.TemTem
 
 @Composable
-fun TemTemComposable(
-    viewModel: TemTemViewModel,
-    id: Int?
+fun TemTemDetailsHeader(
+    temTem: TemTem
 ) {
-    id?.let {
-        viewModel.selectTemTem(it)
-    }
-    viewModel.currentTem.value?.let { temTem ->
-        Column(modifier = Modifier.padding(16.dp)) {
-            Row(verticalAlignment = Alignment.CenterVertically) {
+                Row(verticalAlignment = Alignment.CenterVertically) {
                 SubcomposeAsyncImage(
                     model = temTem.portrait, contentDescription = temTem.name,
                     contentScale = ContentScale.Crop,
@@ -82,30 +74,4 @@ fun TemTemComposable(
                 text = temTem.description ?: "",
                 fontStyle = FontStyle.Italic
             )
-            LazyVerticalGrid(columns = GridCells.Fixed(1)) {
-                temTem.stats?.let { statMap ->
-                    items(mapOf("Stat" to "Base").plus(statMap).toList()) {
-                        Row {
-                            Text(
-                                text = it.first,
-                                modifier = Modifier
-                                    .width(70.dp)
-                                    .border(1.dp, Color.Black, RectangleShape)
-                                    .padding(8.dp),
-                                textAlign = TextAlign.Center
-                            )
-                            Text(
-                                text = it.second, modifier = Modifier
-                                    .width(70.dp)
-                                    .border(1.dp, Color.Black, RectangleShape)
-                                    .padding(8.dp),
-                                textAlign = TextAlign.Center
-                            )
-                        }
-                    }
-                }
-            }
-
-        }
-    }
 }

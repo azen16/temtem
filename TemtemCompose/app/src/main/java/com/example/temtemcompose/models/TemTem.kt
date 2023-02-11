@@ -36,7 +36,7 @@ data class TemTem (
     @SerializedName("hatchMins")
     val hatchMins: Double?,
     @SerializedName("tvYields")
-    val tvYields: StatTable?,
+    val tvYields: Map<String, String>?,
     @SerializedName("gameDescription")
     val description: String?
 )
