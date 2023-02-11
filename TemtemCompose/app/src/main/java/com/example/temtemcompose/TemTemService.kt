@@ -2,6 +2,7 @@ package com.example.temtemcompose
 
 import com.example.temtemcompose.models.TemTem
 import com.example.temtemcompose.models.TemType
+import com.example.temtemcompose.models.techniques.TechniqueInfo
 import okhttp3.OkHttpClient
 import okhttp3.logging.HttpLoggingInterceptor
 import retrofit2.Response
@@ -11,7 +12,6 @@ import retrofit2.http.GET
 import retrofit2.http.Path
 
 interface TemTemService {
-
     @GET("temtems")
     suspend fun listTemTem(): Response<ArrayList<TemTem>>
 
@@ -20,10 +20,14 @@ interface TemTemService {
 
     @GET("temtems/{id}")
     suspend fun getTemTem(@Path("id") id: Int): Response<TemTem>
+
+    @GET("techniques")
+    suspend fun getTechniques(): Response<ArrayList<TechniqueInfo>>
 }
 
 object TemTemServiceHelper {
     private const val BASE_URL = "https://temtem-api.mael.tech/api/"
+    const val IMAGE_URL = "https://temtem-api.mael.tech/"
 
     fun getInstance(): Retrofit {
         val mHttpLoggingInterceptor = HttpLoggingInterceptor()

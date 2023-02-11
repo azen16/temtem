@@ -48,7 +48,7 @@ fun TemTemListItem(
                 .clip(
                     CircleShape
                 )
-                .border(2.dp, Color.Cyan, CircleShape)
+                .border(4.dp, MaterialTheme.colorScheme.tertiary, CircleShape)
         ) {
             val state = painter.state
             if (state is AsyncImagePainter.State.Loading || state is AsyncImagePainter.State.Error) {

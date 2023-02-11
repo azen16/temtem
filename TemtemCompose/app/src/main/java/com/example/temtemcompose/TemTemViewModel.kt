@@ -6,17 +6,20 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.example.temtemcompose.models.TemTem
 import com.example.temtemcompose.models.TemType
+import com.example.temtemcompose.models.techniques.TechniqueInfo
 import kotlinx.coroutines.launch
 
 class TemTemViewModel: ViewModel() {
     private val temList = mutableStateListOf<TemTem>()
     val typeList = mutableStateListOf<TemType>()
+    val techniqueList = mutableStateListOf<TechniqueInfo>()
     val filteredTemList = mutableStateListOf<TemTem>()
     val currentTem = mutableStateOf<TemTem?>(null)
 
     init {
         getTemList()
         getTemTypeList()
+        getTechniqueList()
     }
 
     fun filter(type: String) {
@@ -64,6 +67,18 @@ class TemTemViewModel: ViewModel() {
                 temList.addAll(tems)
                 filteredTemList.clear()
                 filteredTemList.addAll(tems)
+            }
+        }
+    }
+
+    private fun getTechniqueList() {
+        viewModelScope.launch {
+            val call = TemTemServiceHelper.getInstance().create(TemTemService::class.java)
+                .getTechniques()
+            val list = call.body()
+            if (call.isSuccessful) {
+                techniqueList.clear()
+                techniqueList.addAll(list ?: emptyList())
             }
         }
     }

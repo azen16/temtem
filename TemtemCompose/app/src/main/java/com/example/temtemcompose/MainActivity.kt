@@ -55,7 +55,7 @@ class MainActivity : ComponentActivity() {
             }
             composable("temtem/{id}",
              arguments = listOf(navArgument("id") {type = NavType.IntType})) {
-                TemTemDetailedView(viewModel = viewModel, it.arguments?.getInt("id"))
+                TemTemDetailedView(viewModel = viewModel, it.arguments?.getInt("id"), navController)
             }
         }
     }

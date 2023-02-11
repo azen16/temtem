@@ -20,31 +20,50 @@ fun TemTemDetailsTables(
         Row {
             Column(modifier = Modifier.padding(0.dp, 0.dp, 16.dp, 0.dp)) {
                 temTem.traits?.let { traits ->
-                    repeat(traits.size) {
-                        val trait = traits[it]
-                        Row(
-                            modifier = Modifier.height(IntrinsicSize.Max),
-                            horizontalArrangement = Arrangement.Center
-                        ) {
-                            Text(
-                                text = trait,
-                                modifier = Modifier
-                                    .fillMaxHeight()
-                                    .width(100.dp)
-                                    .border(1.dp, Color.Black, RectangleShape)
-                                    .padding(8.dp),
+                    repeat(traits.size + 1) {
+                        if (it == 0) {
+                            Row(
+                                modifier = Modifier.height(IntrinsicSize.Max),
+                                horizontalArrangement = Arrangement.Center
+                            ) {
+                                Text(
+                                    text = "Traits",
+                                    modifier = Modifier
+                                        .fillMaxHeight()
+                                        .width(200.dp)
+                                        .border(1.dp, Color.Black, RectangleShape)
+                                        .padding(8.dp),
 
-                                textAlign = TextAlign.Center,
-                                style = MaterialTheme.typography.bodySmall
-                            )
-                            Text(
-                                text = "Insert Description", modifier = Modifier
-                                    .width(100.dp)
-                                    .border(1.dp, Color.Black, RectangleShape)
-                                    .padding(8.dp),
-                                textAlign = TextAlign.Center,
-                                style = MaterialTheme.typography.bodySmall
-                            )
+                                    textAlign = TextAlign.Center,
+                                    style = MaterialTheme.typography.bodySmall
+                                )
+                            }
+                        } else {
+                            val trait = traits[it - 1]
+                            Row(
+                                modifier = Modifier.height(IntrinsicSize.Max),
+                                horizontalArrangement = Arrangement.Center
+                            ) {
+                                Text(
+                                    text = trait,
+                                    modifier = Modifier
+                                        .fillMaxHeight()
+                                        .width(100.dp)
+                                        .border(1.dp, Color.Black, RectangleShape)
+                                        .padding(8.dp),
+
+                                    textAlign = TextAlign.Center,
+                                    style = MaterialTheme.typography.bodySmall
+                                )
+                                Text(
+                                    text = "Insert Description", modifier = Modifier
+                                        .width(100.dp)
+                                        .border(1.dp, Color.Black, RectangleShape)
+                                        .padding(8.dp),
+                                    textAlign = TextAlign.Center,
+                                    style = MaterialTheme.typography.bodySmall
+                                )
+                            }
                         }
                     }
                 }
@@ -81,26 +100,53 @@ fun TemTemDetailsTables(
 
         }
         temTem.techniques?.let { techniques ->
-            repeat(techniques.size) {
-                val technique = techniques[it]
-                Row {
+            repeat(techniques.size + 1) {
+                if (it == 0) {
                     Row {
-                        Text(
-                            text = technique.name ?: "",
-                            modifier = Modifier
-                                .width(200.dp)
-                                .border(1.dp, Color.Black, RectangleShape)
-                                .padding(8.dp),
-                            textAlign = TextAlign.Center
-                        )
-                        Text(
-                            text = technique.levels ?: technique.source ?: "",
-                            modifier = Modifier
-                                .width(200.dp)
-                                .border(1.dp, Color.Black, RectangleShape)
-                                .padding(8.dp),
-                            textAlign = TextAlign.Center
-                        )
+                        Row {
+                            Text(
+                                text = "Technique",
+                                modifier = Modifier
+                                    .width(200.dp)
+                                    .border(1.dp, Color.Black, RectangleShape)
+                                    .padding(8.dp),
+                                textAlign = TextAlign.Center
+                            )
+                            Text(
+                                text = "How to Acquire",
+                                modifier = Modifier
+                                    .width(200.dp)
+                                    .border(1.dp, Color.Black, RectangleShape)
+                                    .padding(8.dp),
+                                textAlign = TextAlign.Center
+                            )
+                        }
+                    }
+                } else {
+                    val technique = techniques[it - 1]
+                    Row {
+                        Row {
+                            Text(
+                                text = technique.name ?: "",
+                                modifier = Modifier
+                                    .width(200.dp)
+                                    .border(1.dp, Color.Black, RectangleShape)
+                                    .padding(8.dp),
+                                textAlign = TextAlign.Center
+                            )
+                            Text(
+                                text = if (technique.levels != null) {
+                                    "Level ${technique.levels}"
+                                } else {
+                                    technique.source ?: ""
+                                },
+                                modifier = Modifier
+                                    .width(200.dp)
+                                    .border(1.dp, Color.Black, RectangleShape)
+                                    .padding(8.dp),
+                                textAlign = TextAlign.Center
+                            )
+                        }
                     }
                 }
             }
