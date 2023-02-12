@@ -21,11 +21,17 @@ import androidx.navigation.NavController
 import coil.compose.AsyncImagePainter
 import coil.compose.SubcomposeAsyncImage
 import coil.compose.SubcomposeAsyncImageContent
+import com.example.temtemcompose.TemTemServiceHelper
+import com.example.temtemcompose.TemTemViewModel
 import com.example.temtemcompose.models.TemTem
 
+/**
+ * Detailed view header
+ */
 @Composable
 fun TemTemDetailsHeader(
     temTem: TemTem,
+    viewModel: TemTemViewModel,
     navController: NavController
 ) {
     Row(verticalAlignment = Alignment.CenterVertically) {
@@ -57,37 +63,93 @@ fun TemTemDetailsHeader(
                 color = MaterialTheme.colorScheme.primary,
                 fontWeight = FontWeight.Bold
             )
-            Text(
-                text = temTem.types?.joinToString(" | ") ?: "",
-                style = MaterialTheme.typography.headlineSmall,
-                color = MaterialTheme.colorScheme.secondary
-            )
+            BoxWithConstraints {
+                if (maxWidth < 300.dp) {
+                    Column {
+                        Row(verticalAlignment = Alignment.CenterVertically) {
+                            temTem.types?.forEachIndexed { index, type ->
+                                viewModel.findTypeIcon(type)?.let { icon ->
+                                    SubcomposeAsyncImage(
+                                        model = TemTemServiceHelper.IMAGE_URL + icon.substring(
+                                            1,
+                                            icon.length
+                                        ),
+                                        contentDescription = type,
+                                        contentScale = ContentScale.Crop,
+                                        modifier = Modifier
+                                            .size(32.dp)
+                                            .clip(
+                                                CircleShape
+                                            )
+                                    ) {
+                                        val state = painter.state
+                                        if (state is AsyncImagePainter.State.Loading || state is AsyncImagePainter.State.Error) {
+                                            CircularProgressIndicator()
+                                        } else {
+                                            SubcomposeAsyncImageContent()
+                                        }
+                                    }
+                                }
+                                Text(
+                                    text = if (index == 0 && temTem.types.size > 1) "$type | " else type,
+                                    style = MaterialTheme.typography.headlineSmall,
+                                    color = MaterialTheme.colorScheme.secondary
+                                )
+                            }
+                        }
+                    }
+                } else {
+                    Row(verticalAlignment = Alignment.CenterVertically) {
+                        temTem.types?.forEachIndexed { index, type ->
+                            viewModel.findTypeIcon(type)?.let { icon ->
+                                SubcomposeAsyncImage(
+                                    model = TemTemServiceHelper.IMAGE_URL + icon.substring(
+                                        1,
+                                        icon.length
+                                    ),
+                                    contentDescription = type,
+                                    contentScale = ContentScale.Crop,
+                                    modifier = Modifier
+                                        .size(32.dp)
+                                        .clip(
+                                            CircleShape
+                                        )
+                                ) {
+                                    val state = painter.state
+                                    if (state is AsyncImagePainter.State.Loading || state is AsyncImagePainter.State.Error) {
+                                        CircularProgressIndicator()
+                                    } else {
+                                        SubcomposeAsyncImageContent()
+                                    }
+
+                                }
+                            }
+                            Text(
+                                text = if (index == 0 && temTem.types.size > 1) "$type | " else type,
+                                style = MaterialTheme.typography.headlineSmall,
+                                color = MaterialTheme.colorScheme.secondary
+                            )
+                        }
+                    }
+                }
+            }
         }
     }
     temTem.number?.let { id ->
-        Row(
-            modifier = Modifier.fillMaxWidth().padding(0.dp, 16.dp, 0.dp, 0.dp),
-            horizontalArrangement = Arrangement.SpaceBetween
-        ) {
-            Text(
-                text = "Previous TemTem",
-                color = MaterialTheme.colorScheme.tertiary,
-                modifier = Modifier.clickable {
-
-                    navController.navigate("temtem/${id - 1}") {
-                        popUpTo("home")
-                    }
-                })
-            if (temTem.number != 164) {
-                Text(
-                    textAlign = TextAlign.End,
-                    text = "Next TemTem",
-                    color = MaterialTheme.colorScheme.tertiary,
-                    modifier = Modifier.clickable {
-                        navController.navigate("temtem/${id + 1}") {
-                            popUpTo("home")
-                        }
-                    })
+        BoxWithConstraints {
+            if (maxWidth < 300.dp) {
+                Column {
+                    DisplayPreviousNextTemTem(navController = navController, id = id)
+                }
+            } else {
+                Row(
+                    modifier = Modifier
+                        .fillMaxWidth()
+                        .padding(0.dp, 16.dp, 0.dp, 0.dp),
+                    horizontalArrangement = Arrangement.SpaceBetween
+                ) {
+                    DisplayPreviousNextTemTem(navController = navController, id = id)
+                }
             }
         }
     }
@@ -101,4 +163,28 @@ fun TemTemDetailsHeader(
         text = temTem.description ?: "",
         fontStyle = FontStyle.Italic
     )
+}
+
+@Composable
+fun DisplayPreviousNextTemTem(navController: NavController, id: Int) {
+    Text(
+        text = "Previous TemTem",
+        color = MaterialTheme.colorScheme.tertiary,
+        modifier = Modifier.clickable {
+
+            navController.navigate("temtem/${id - 1}") {
+                popUpTo("home")
+            }
+        })
+    if (id != 164) {
+        Text(
+            textAlign = TextAlign.End,
+            text = "Next TemTem",
+            color = MaterialTheme.colorScheme.tertiary,
+            modifier = Modifier.clickable {
+                navController.navigate("temtem/${id + 1}") {
+                    popUpTo("home")
+                }
+            })
+    }
 }

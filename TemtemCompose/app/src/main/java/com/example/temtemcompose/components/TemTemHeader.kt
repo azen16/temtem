@@ -1,6 +1,5 @@
 package com.example.temtemcompose.components
 
-import android.util.Log
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.shape.CircleShape
@@ -66,7 +65,6 @@ fun TemTemHeader(viewModel: TemTemViewModel = TemTemViewModel()) {
                     )
                 }, leadingIcon = {
                     it.icon?.let { icon ->
-                        Log.d("Icon: ", icon.substring(1, icon.length))
                         SubcomposeAsyncImage(
                             model = IMAGE_URL + icon.substring(1, icon.length),
                             contentDescription = it.name,

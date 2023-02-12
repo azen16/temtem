@@ -25,8 +25,15 @@ fun TemTemDetailedView(
         LazyColumn(modifier = Modifier.padding(16.dp)) {
             items(detailedViewList) {
                 when (it) {
-                    "Header" -> TemTemDetailsHeader(temTem = temTem, navController = navController)
-                    "Tables" -> TemTemDetailsTables(temTem = temTem)
+                    "Header" -> TemTemDetailsHeader(
+                        temTem = temTem,
+                        viewModel = viewModel,
+                        navController = navController
+                    )
+                    "Tables" ->  {
+                        TemTemDetailsTables(temTem = temTem)
+                        TemTemTechniqueTables(temTem = temTem, viewModel = viewModel)
+                    }
                 }
             }
         }
