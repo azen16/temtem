@@ -33,6 +33,20 @@ class TemTemViewModel: ViewModel() {
         }
     }
 
+    /**
+     * Finds the matching type icon
+     * @param type temtem type
+     */
+    fun findTypeIcon(type: String): String? =
+        typeList.find { it.name == type}?.icon
+
+    /**
+     * Finds the matching technique
+     * @param technique name of the technique
+     */
+    fun findTechnique(technique: String?): TechniqueInfo? =
+        techniqueList.find { it.name == technique }
+
     fun selectTemTem(id: Int) {
         viewModelScope.launch {
             val call = TemTemServiceHelper.getInstance().create(TemTemService::class.java)
