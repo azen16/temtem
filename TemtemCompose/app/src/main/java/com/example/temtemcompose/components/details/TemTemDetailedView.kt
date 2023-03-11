@@ -4,9 +4,12 @@ import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
 import androidx.compose.material3.CircularProgressIndicator
+import androidx.compose.material3.MaterialTheme
+import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.text.font.FontStyle
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavHostController
 import com.example.temtemcompose.TemTemViewModel
@@ -30,9 +33,17 @@ fun TemTemDetailedView(
                         viewModel = viewModel,
                         navController = navController
                     )
-                    "Tables" ->  {
+                    "Tables" -> {
                         TemTemDetailsTables(temTem = temTem)
                         TemTemTechniqueTables(temTem = temTem, viewModel = viewModel)
+                        Row {
+                            Text(
+                                text = "Rotate to see the full technique table",
+                                modifier = Modifier.padding(8.dp),
+                                fontStyle = FontStyle.Italic,
+                                style = MaterialTheme.typography.bodySmall
+                            )
+                        }
                     }
                 }
             }

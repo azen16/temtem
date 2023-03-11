@@ -12,7 +12,7 @@ import kotlinx.coroutines.launch
 class TemTemViewModel: ViewModel() {
     private val temList = mutableStateListOf<TemTem>()
     val typeList = mutableStateListOf<TemType>()
-    val techniqueList = mutableStateListOf<TechniqueInfo>()
+    private val techniqueList = mutableStateListOf<TechniqueInfo>()
     val filteredTemList = mutableStateListOf<TemTem>()
     val currentTem = mutableStateOf<TemTem?>(null)
 
